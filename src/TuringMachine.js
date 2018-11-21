@@ -1,4 +1,6 @@
 
+const Tape = require('./Tape')
+
 module.exports = class TuringMachine {
 
     constructor(program){
@@ -10,14 +12,14 @@ module.exports = class TuringMachine {
     compute(){
         const state = this.program[this.state]
         const instr = state[this.tape.read()]
-        this.state = instr[0]
         this.tape.write(instr[1])
         this.tape.move(instr[2])
+        return this.state = instr[0]
     }
 
-    run(){
-        while(this.state != null)
-            this.compute()
+    run(callback){
+        while(this.compute() != null)
+            callback && callback()
         return this.tape.symbols
     }
 
