@@ -16,4 +16,4 @@ const machine = new TuringMachine([
     }
 ])
 
-machine.run(() => console.log(machine.tape.symbols))
+machine.run(Infinity,() => console.log(machine.tape.symbols))

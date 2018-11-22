@@ -11,14 +11,15 @@ module.exports = class TuringMachine {
 
     compute(){
         const state = this.program[this.state]
-        const instr = state[this.tape.read()]
+        const instr = state[this.tape.read()] || state.$
         this.tape.write(instr[1])
         this.tape.move(instr[2])
         return this.state = instr[0]
     }
 
-    run(callback){
-        while(this.compute() != null)
+    run(limit,callback){
+        let i = 0
+        while(this.compute() != null && i++ < limit)
             callback && callback()
         return this.tape.symbols
     }
